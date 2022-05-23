@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import { App } from './App.jsx';
 
-function Componente({titulo, children}) {
-/*function Componente(props) {
+/*function Componente({titulo, children}) {
+function Componente(props) {
   console.log(props);
   //const titulo = props.titulo;
   //const contenido = props.contenido;
@@ -11,19 +12,19 @@ function Componente({titulo, children}) {
   
   <Componente titulo="React" contenido="Hola desde React"></Componente>
   otra manera de hacerlo con mas codigo*/
-  return (
+  /*return (
     <div>
     <h1>{titulo}</h1>
     <div>{children}</div>
     </div>
   );
-}
+}*/
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
   <React.StrictMode>
-    <Componente titulo="React">Hola desde React</Componente>    
+    <App />    
   </React.StrictMode>
 );
 

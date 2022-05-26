@@ -21,8 +21,8 @@ export function App() {
       <main>
         
         <Switch>
-          <Route exact path="/movies/:movieId"><MovieDetails />
-            
+          <Route exact path="/movies/:movieId">
+            <MovieDetails />            
           </Route>
           <Route path="/">
             <LandingPage />

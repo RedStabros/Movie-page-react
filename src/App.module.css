@@ -1,5 +1,6 @@
 .tittle{
     text-align: center;
     font-size: 3rem;
-    text-shadow: 0 0 10px;
+    text-shadow: 0 0 10px rgb(148, 145, 145), 0 0 20px #fff, 0 0 30px #006fe6, 0 0 40px #4d6cf4,
+    0 0 50px #008ee6, 0 0 60px #6ca5eb, 0 0 70px #e60073;
 }

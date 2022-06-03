@@ -1,4 +1,4 @@
-import { MoviesGrid } from "./components/MoviesGrid";
+//import { MoviesGrid } from "./components/MoviesGrid";
 import styles from './App.module.css';
 import {
   BrowserRouter as Router,
@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import { MovieDetails } from "./pages/MovieDetails";
 import { LandingPage } from "./pages/LandingPage";
-
 
 export function App() {
   return (

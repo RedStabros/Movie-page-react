@@ -1,45 +1,52 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "../hooks/useQuery";
+//import { useQuery } from "../hooks/useQuery";
 import { get } from "../utils/httpClient";
 import { MovieCard } from "./MovieCard.jsx";
 import styles from "./MoviesGrid.module.css";
 import { Spinner } from "./Spinner";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Empty } from "./Empty";
 
-
-export function MoviesGrid() {
+export function MoviesGrid({ search }) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
-  const query = useQuery();
-  const search = query.get('search');
 
   useEffect(() => {
     setIsLoading(true);
-    const searchUrl = search ? '/search/movie?query=' + search : '/discover/movie';
-    get(searchUrl)
-    /* fetch("https://api.themoviedb.org/3/discover/movie", {
-      headers: {
-        Authorization:
-          "Bearer <<Token>>",
-        "Content-Type": "application/json;charset=utf-8",
-      },
-    })
-      .then((result) => result.json()) */
-      .then((data) => {
-        setMovies(data.results);
+    const searchUrl = search
+      ? "/search/movie?query=" + search + "&page=" + page
+      : "/discover/movie?page=" + page;
+      get(searchUrl).then((data) => {
+        setMovies((prevMovies) => prevMovies.concat(data.results));
+        setHasMore(data.page < data.total_pages);
         setIsLoading(false);
       });
-    }, [search]);
+  }, [search, page]);
 
-    if (isLoading) {
-      return <Spinner />;
-    }
+  if (!isLoading && movies.length === 0) {
+    return <Empty />;
+  }
 
+/*
+  if (isLoading) {
+    return <Spinner />;
+  }
+*/
   return (
-    <ul className={styles.moviesGrid}>
-      {movies.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} />
-      ))}
-    </ul>
+    <InfiniteScroll
+      dataLength={movies.length}
+      hasMore={hasMore}
+      next={() => setPage((prevPage) => prevPage + 1)}
+      loader={<Spinner />}
+    >
+      <ul className={styles.moviesGrid}>
+        {movies.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
+      </ul>
+    </InfiniteScroll>
   );
 }
